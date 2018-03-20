@@ -1,0 +1,16 @@
+    renderObject(){
+        return Object.entries(this.state.data).map(([key, value], i) => {
+            return (
+                <div key={key}>
+                    {value.math.} ;
+                    {value.group_description}
+                </div>
+            )
+        })
+    }
+
+
+    <Route exact={true} path='/group_detail/:group_name' render={routeProps => (
+                        <GroupDetail
+                            group_name={routeProps.match.params.group_name}
+                        />
