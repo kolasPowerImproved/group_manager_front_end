@@ -13,6 +13,8 @@ export default class GroupDetail extends Component {
         this.state = {
             data: {},
             trainer: [],
+            imagesForSlider: [],
+            musicForPlayer: [],
         };
 
     }
@@ -31,7 +33,13 @@ export default class GroupDetail extends Component {
                 this.setState({
                     trainer: findresponse.trainer,
                 });
-                console.log(this.state.trainer);
+                this.setState({
+                    imagesForSlider: findresponse.images_for_slider,
+                });
+                this.setState({
+                    musicForPlayer: findresponse.music_for_player,
+                });
+                console.log(this.state.musicForPlayer);
             })
     }
 
@@ -153,56 +161,35 @@ export default class GroupDetail extends Component {
 
                 <div className="row">
                     <div className="col-6">
-                        <Carousel autoPlay showArrows showThumbs emulateTouch useKeyboardArrows stopOnHover
+                        <Carousel autoPlay showArrows showThumbs={false} emulateTouch useKeyboardArrows stopOnHover
                                   interval="2500" transitionTime="750" infiniteLoop>
-                            <div>
-                                <img src={'http://127.0.0.1:8000' + this.state.data.images_for_slider}/>
-                            </div>
-                            <div>
-                                <img src={'http://127.0.0.1:8000' + this.state.data.group_image}/>
-                            </div>
-                            <div>
-                                <img src={'http://127.0.0.1:8000' + this.state.data.group_image}/>
-                            </div>
+                            {this.state.imagesForSlider.map((dynamicData, key) =>
+                                <div>
+                                    <img width={900} height={800} src={'http://127.0.0.1:8000' + dynamicData.image}/>
+                                </div>
+                            )}
                         </Carousel>
                     </div>
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item">
-                            <div className="row">
-                            <div className="col">
-                                <ReactAudioPlayer
-                                    src={'http://127.0.0.1:8000' + this.state.data.group_music}
-                                    controls
-                                    volume="0"
-                                />
-                            </div>
-                                <div className="col">dfgfdgfdg</div>
-                            </div>
-                        </li>
-                        <li className="list-group-item">
-                            <div className="row">
-                                <div className="col">
-                                    <ReactAudioPlayer
-                                        src={'http://127.0.0.1:8000' + this.state.data.group_music}
-                                        controls
-                                        volume="0"
-                                    />
-                                </div>
-                                <div className="col">dfgfdgfdg</div>
-                            </div>
-                        </li>
-                        <li className="list-group-item">
-                            <div className="row">
-                                <div className="col">
-                                    <ReactAudioPlayer
-                                        src={'http://127.0.0.1:8000' + this.state.data.group_music}
-                                        controls
-                                        volume="0"
-                                    />
-                                </div>
-                                <div className="col">dfgfdgfdg</div>
-                            </div>
-                        </li>
+                        <ul className="list-group list-group-flush">
+                            {this.state.musicForPlayer.map((dynamicData, key) =>
+                                <li className="list-group-item">
+                                    <div className="row">
+                                        <div className="col">
+                                            <ReactAudioPlayer
+                                                src={'http://127.0.0.1:8000' + dynamicData.music}
+                                                controls
+                                                volume="0%"
+                                                className={dynamicData.music_name}
+                                            />
+                                        </div>
+                                        <div className="col">
+                                            <a href={'' + dynamicData.music} className="Main-link-button">{dynamicData.music_name}</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            )}
+                        </ul>
                     </ul>
                 </div>
 
